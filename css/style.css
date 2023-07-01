@@ -1,0 +1,77 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh;
+    background-color: #ceceda;
+}
+
+#movie-poster {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 52rem;
+    box-shadow: 60px -16px teal;
+
+  }
+  h1{
+    margin-left: 52rem;
+    color: rgb(247, 115, 7);
+  }
+ #movie-title{
+  margin-left: 52rem; 
+ }
+#movie-details1{
+    margin-left: 58rem;
+
+
+}
+  
+#films {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .film-item {
+    flex: 0 0 calc(33.33% - 20px);
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .film-item div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .film-item img {
+    height: auto;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 5px rgba( 12px 12px 2px -1px rgba(0 0 255 .2));
+    border-radius: 3px;
+    width: 300px;
+    border: 2px solid blueviolet;
+    margin: 1rem;
+    /* overflow: hidden; */
+    position: relative;
+  }
+  .film-item img:hover {
+    box-shadow:  10px 5px 5px blue;
+  }
+#buy-ticket{
+    /* position: absolute; */
+    top:50%;
+    background-color:#0a0a23;
+    color: #fff;
+    border:none;
+    border-radius:10px;
+    box-shadow: 0px 0px 2px 2px rgb(0,0,0);
+}

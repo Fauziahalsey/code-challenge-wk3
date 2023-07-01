@@ -74,7 +74,7 @@ window.addEventListener('load', () => {
   });
 });
 
-// Function to handle ticket purchase
+//tickets purchase
 function buyTicket() {
   const availableTicketsElement = document.getElementById('movie-tickets');
   let availableTickets = parseInt(availableTicketsElement.textContent.split(': ')[1]);

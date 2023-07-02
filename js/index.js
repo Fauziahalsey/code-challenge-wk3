@@ -59,7 +59,7 @@ function populateFilmMenu(films) {
     if (capacity - tickets_sold === 0) {
       li.classList.add('sold-out');
     }
-    
+
 
     li.addEventListener('click', function(event) {
       event.preventDefault();
@@ -73,7 +73,7 @@ function populateFilmMenu(films) {
           console.log('Error:', error);
         });
     });
-  
+
 
     filmsList.appendChild(li);
   });

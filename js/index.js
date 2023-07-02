@@ -72,6 +72,7 @@ function populateFilmMenu(films) {
           console.log('Error:', error);
         });
     });
+  
 
     filmsList.appendChild(li);
   });

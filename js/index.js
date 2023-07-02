@@ -59,6 +59,7 @@ function populateFilmMenu(films) {
     if (capacity - tickets_sold === 0) {
       li.classList.add('sold-out');
     }
+    
 
     li.addEventListener('click', function(event) {
       event.preventDefault();

@@ -3,24 +3,24 @@ function displayMovieDetails(movie) {
   const { poster, title, runtime, description, showtime, capacity, tickets_sold } = movie;
   const ticketsAvailable = capacity - tickets_sold;
 
-  document.getElementById('movie-poster').src = poster;
+  const moviePoster = document.getElementById('movie-poster');
+  moviePoster.src = poster;
+  moviePoster.style.display = 'block';
+
   document.getElementById('movie-title').textContent = title;
   document.getElementById('movie-runtime').textContent = `Runtime: ${runtime} minutes`;
   document.getElementById('movie-showtime').textContent = `Showtime: ${showtime}`;
-  document.getElementById('movie-description').textContent = description;
+  document.getElementById('movie-tickets').textContent = ticketsAvailable;
 
   const buyTicketButton = document.getElementById('buy-ticket');
-  buyTicketButton.disabled = ticketsAvailable === 0;
-  buyTicketButton.textContent = ticketsAvailable === 0 ? 'Sold Out' : 'Buy Ticket';
-
-  // Update film item in the film menu
-  const filmsList = document.getElementById('films');
-  const filmItems = filmsList.getElementsByClassName('film-item');
-  for (let i = 0; i < filmItems.length; i++) {
-    filmItems[i].classList.remove('active');
+  buyTicketButton.classList.toggle('sold-out', ticketsAvailable === 0);
+  buyTicketButton.removeEventListener('click', buyTicket);
+  if (ticketsAvailable > 0) {
+    buyTicketButton.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent page refresh
+      buyTicket(movie);
+    });
   }
-  const activeFilmItem = document.getElementById(`film-${movie.id}`);
-  activeFilmItem.classList.add('active');
 }
 
 // Function to handle ticket purchase
@@ -29,36 +29,26 @@ function buyTicket(movie) {
   const availableTickets = capacity - tickets_sold;
 
   if (availableTickets > 0) {
+movie.tickets_sold = tickets_sold + 1;
+
     fetch(`http://localhost:3000/films/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ tickets_sold: tickets_sold + 1 })
+      body: JSON.stringify({ tickets_sold: updatedTicketsSold })
     })
       .then(response => response.json())
       .then(updatedMovie => {
         displayMovieDetails(updatedMovie);
+        const ticketsAvailableElement = document.getElementById('movie-tickets');
+        ticketsAvailableElement.textContent = updatedTicketsSold;
       })
       .catch(error => {
         console.log('Error:', error);
       });
   }
 }
-
-// Event listener for buy ticket button
-document.getElementById('buy-ticket').addEventListener('click', function(event) {
-  event.preventDefault();
-
-  fetch('http://localhost:3000/films/1')
-    .then(response => response.json())
-    .then(movie => {
-      buyTicket(movie);
-    })
-    .catch(error => {
-      console.log('Error:', error);
-    });
-});
 
 // Function to populate film menu
 function populateFilmMenu(films) {

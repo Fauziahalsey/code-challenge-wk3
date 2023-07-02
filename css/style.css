@@ -81,4 +81,52 @@ body{
     background-color: #ccc;
     cursor: not-allowed;
   }
+  /* Style for movie details */
+#movie-details {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#movie-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+#movie-poster {
+  width: 200px;
+  height: auto;
+  display: none;
+  margin-bottom: 10px;
+}
+
+#movie-runtime,
+#movie-showtime,
+#movie-tickets {
+  margin-bottom: 5px;
+}
+
+#buy-ticket {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.sold-out {
+  background-color: #f44336;
+  cursor: not-allowed;
+}
+
+/* Style for film menu */
+#films {
+  list-style: none;
+  padding: 0;
+}
+
+.film-item {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
   

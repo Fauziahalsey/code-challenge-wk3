@@ -1,6 +1,6 @@
 // Function to display movie details
 function displayMovieDetails(movie) {
-  const { poster, title, runtime, description, showtime, capacity, tickets_sold } = movie;
+  const { poster, title, runtime, showtime, capacity, tickets_sold } = movie;
   const ticketsAvailable = capacity - tickets_sold;
 
   const moviePoster = document.getElementById('movie-poster');
@@ -25,30 +25,22 @@ function displayMovieDetails(movie) {
 
 // Function to handle ticket purchase
 function buyTicket(movie) {
-  const { id, capacity, tickets_sold } = movie;
+  const { capacity, tickets_sold } = movie;
   const availableTickets = capacity - tickets_sold;
 
   if (availableTickets > 0) {
-movie.tickets_sold = tickets_sold + 1;
+    const updatedTicketsSold = tickets_sold + 1;
 
-    fetch(`http://localhost:3000/films/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ tickets_sold: updatedTicketsSold })
-    })
-      .then(response => response.json())
-      .then(updatedMovie => {
-        displayMovieDetails(updatedMovie);
-        const ticketsAvailableElement = document.getElementById('movie-tickets');
-        ticketsAvailableElement.textContent = updatedTicketsSold;
-      })
-      .catch(error => {
-        console.log('Error:', error);
-      });
+    displayMovieDetails({
+      ...movie,
+      tickets_sold: updatedTicketsSold
+    });
+
+    const ticketsAvailableElement = document.getElementById('movie-tickets');
+    ticketsAvailableElement.textContent = updatedTicketsSold;
   }
 }
+
 
 // Function to populate film menu
 function populateFilmMenu(films) {
@@ -85,9 +77,7 @@ function populateFilmMenu(films) {
 // Fetch movie list and populate the film menu
 fetch('http://localhost:3000/films')
   .then(response => response.json())
-  .then(films => {
-    populateFilmMenu(films);
-  })
+  .then(populateFilmMenu)
   .catch(error => {
     console.log('Error:', error);
   });

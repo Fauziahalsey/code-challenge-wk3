@@ -79,7 +79,7 @@ function populateFilmMenu(films) {
   });
 }
 
-// Fetch movie list and populate the film menu
+// Fetch movie list and distribute the film menu
 fetch('http://localhost:3000/films')
   .then(response => response.json())
   .then(populateFilmMenu)

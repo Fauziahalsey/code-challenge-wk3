@@ -14,10 +14,11 @@ function displayMovieDetails(movie) {
 
   const buyTicketButton = document.getElementById('buy-ticket');
   buyTicketButton.classList.toggle('sold-out', ticketsAvailable === 0);
+  buyTicketButton.textContent = ticketsAvailable === 0 ? 'Sold Out' : 'Buy Ticket';
   buyTicketButton.removeEventListener('click', buyTicket);
   if (ticketsAvailable > 0) {
     buyTicketButton.addEventListener('click', function(event) {
-      event.preventDefault(); // Prevent page refresh
+      event.preventDefault(); // Prevent page  from refreshing
       buyTicket(movie);
     });
   }
@@ -38,9 +39,11 @@ function buyTicket(movie) {
 
     const ticketsAvailableElement = document.getElementById('movie-tickets');
     ticketsAvailableElement.textContent = updatedTicketsSold;
+
+    const filmItem = document.getElementById(`film-${movie.id}`);
+    filmItem.classList.toggle('sold-out', updatedTicketsSold === capacity);
   }
 }
-
 
 // Function to populate film menu
 function populateFilmMenu(films) {

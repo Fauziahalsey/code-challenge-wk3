@@ -113,12 +113,12 @@ body{
   cursor: pointer;
 }
 
-.sold-out {
+/* .sold-out {
   background-color: #f44336;
   cursor: not-allowed;
-}
+} */
 
-/* Style for film menu */
+
 #films {
   list-style: none;
   padding: 0;

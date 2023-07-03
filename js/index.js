@@ -1,6 +1,6 @@
 // Function to display movie details
 function displayMovieDetails(movie) {
-  const { poster, title, runtime, showtime, capacity, tickets_sold } = movie;
+  const { id, poster, title, runtime, showtime, capacity, tickets_sold } = movie;
   const ticketsAvailable = capacity - tickets_sold;
 
   const moviePoster = document.getElementById('movie-poster');
@@ -18,32 +18,41 @@ function displayMovieDetails(movie) {
   buyTicketButton.removeEventListener('click', buyTicket);
   if (ticketsAvailable > 0) {
     buyTicketButton.addEventListener('click', function(event) {
-      event.preventDefault(); // Prevent page  from refreshing
-      buyTicket(movie);
+      event.preventDefault(); // Prevent page from refreshing
+      buyTicket(id); // Pass the movie ID to buyTicket function
     });
   }
 }
 
 // Function to handle ticket purchase
-function buyTicket(movie) {
-  const { capacity, tickets_sold } = movie;
-  const availableTickets = capacity - tickets_sold;
+function buyTicket(movieId) {
+  // Fetch the movie details from the server using the movie ID
+  fetch(`http://localhost:3000/films/${movieId}`)
+    .then(response => response.json())
+    .then(movie => {
+      const { capacity, tickets_sold } = movie;
+      const availableTickets = capacity - tickets_sold;
 
-  if (availableTickets > 0) {
-    const updatedTicketsSold = tickets_sold + 1;
+      if (availableTickets > 0) {
+        const updatedTicketsSold = tickets_sold - 1; // Decrease the tickets sold count by 1
 
-    displayMovieDetails({
-      ...movie,
-      tickets_sold: updatedTicketsSold
+        // Update the movie details with the new tickets sold count
+        movie.tickets_sold = updatedTicketsSold;
+
+        const ticketsAvailableElement = document.getElementById('movie-tickets');
+        ticketsAvailableElement.textContent = capacity - updatedTicketsSold;
+
+        const filmItem = document.getElementById(`film-${movieId}`);
+        filmItem.classList.toggle('sold-out', updatedTicketsSold === capacity);
+      }
+    })
+    .catch(error => {
+      console.log('Error:', error);
     });
-
-    const ticketsAvailableElement = document.getElementById('movie-tickets');
-    ticketsAvailableElement.textContent = updatedTicketsSold;
-
-    const filmItem = document.getElementById(`film-${movie.id}`);
-    filmItem.classList.toggle('sold-out', updatedTicketsSold === capacity);
-  }
 }
+
+
+
 
 // Function to populate film menu
 function populateFilmMenu(films) {
